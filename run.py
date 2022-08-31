@@ -1,7 +1,7 @@
-from db import session
+from db.session import Session
 from db.tables import tables
 
-with session as db_session:
+with Session as db_session:
     new_persons = tables.Persons(name='Viktor', surname='Komarets', birth_date='March')
     db_session.add(new_persons)
     db_session.commit()

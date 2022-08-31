@@ -5,7 +5,7 @@ from db.base import Base
 
 class Persons(Base):
 
-    __tables__ = 'persons'
+    __tablename__ = 'persons'
 
     id = Column(Integer(), nullable=False, primary_key=True, autoincrement=True)
     name = Column(String(), nullable=False)
@@ -18,7 +18,7 @@ class Persons(Base):
 
 class UserTypes(Base):
 
-    __tables__ = 'user_types'
+    __tablename__ = 'user_types'
 
     id = Column(String(), nullable=False, primary_key=True)
     name = Column(String(), nullable=False)
@@ -27,18 +27,19 @@ class UserTypes(Base):
 
 class Users(Base):
 
-    __tables__ = 'users'
+    __tablename__ = 'users'
 
     login = Column(String(), nullable=False, primary_key=True)
     password = Column(String(), nullable=False)
     user_type_id = Column(String(), ForeignKey('user_type.id'), nullable=False)
     person_id = Column(Integer(), ForeignKey('persons.id'), nullable=False)
-    relations = relationship('Emails')
+    relations_1 = relationship('Emails')
+    relations_2 = relationship('UserFavoriteFilms')
 
 
 class Emails(Base):
 
-    __tables__ = 'emails'
+    __tablename__ = 'emails'
 
     id = Column(Integer(), nullable=False, primary_key=True, autoincrement=True)
     name = Column(String(), nullable=False)
@@ -47,7 +48,7 @@ class Emails(Base):
 
 class Genres(Base):
 
-    __tables__ = 'genres'
+    __tablename__ = 'genres'
 
     id = Column(String(), nullable=False, primary_key=True)
     name = Column(String(), nullable=False)
@@ -57,7 +58,7 @@ class Genres(Base):
 
 class Films(Base):
 
-    __tables__ = 'films'
+    __tablename__ = 'films'
 
     id = Column(Integer(), nullable=False, primary_key=True, autoincrement=True)
     duration = Column(Integer(), nullable=False)
@@ -72,23 +73,23 @@ class Films(Base):
 
 class UserFavoriteFilms(Base):
 
-    __tables__ = 'user_favorite_films'
+    __tablename__ = 'user_favorite_films'
 
-    user_login = Column(String(), ForeignKey('users.login'), nullable=False)
-    film_id = Column(Integer(), ForeignKey('films.id'), nullable=False)
+    user_login = Column(String(), ForeignKey('users.login'), nullable=False, primary_key=True)
+    film_id = Column(Integer(), ForeignKey('films.id'), nullable=False, primary_key=True)
 
 
 class FilmsGenres(Base):
 
-    __tables__ = 'films_genres'
+    __tablename__ = 'films_genres'
 
-    film_id = Column(Integer(), ForeignKey('films.id'), nullable=False)
-    film_genre_id = Column(String(), ForeignKey('genres.id'), nullable=False)
+    film_id = Column(Integer(), ForeignKey('films.id'), nullable=False, primary_key=True)
+    film_genre_id = Column(String(), ForeignKey('genres.id'), nullable=False, primary_key=True)
 
 
 class Characters(Base):
 
-    __tables__ = 'characters'
+    __tablename__ = 'characters'
 
     id = Column(Integer(), nullable=False, primary_key=True, autoincrement=True)
     name = Column(String(), nullable=False)
@@ -99,7 +100,7 @@ class Characters(Base):
 
 class CharactersActors(Base):
 
-    __tables__ = 'characters_actors'
+    __tablename__ = 'characters_actors'
 
-    character_id = Column(Integer(), ForeignKey('characters.id'), nullable=False)
-    person_id = Column(Integer(), ForeignKey('persons.id'), nullable=False)
+    character_id = Column(Integer(), ForeignKey('characters.id'), nullable=False, primary_key=True)
+    person_id = Column(Integer(), ForeignKey('persons.id'), nullable=False, primary_key=True)
